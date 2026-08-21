@@ -2,13 +2,6 @@
 
 Analysis code for **"Foldseek-Interface reveals a protein interface universe far from complete"**
 
-Joelle Morgan Strom<sup>\*</sup>, Sooyoung Cha<sup>\*</sup>, Rachel Seongeun Kim<sup>\*</sup>,
-Harshit Sajal, Cameron L. M. Gilchrist, Martin Steinegger, Katja Luck
-(<sup>\*</sup> equal contribution)
-
-Contact: martin.steinegger@snu.ac.kr, k.luck@imb-mainz.de
-
-> **Citation** — TODO: add journal / preprint DOI once available.
 
 Foldseek-Interface converts 3D interface structures into searchable 3Di sequences,
 enabling fast alignment and clustering of protein interaction interfaces. It matches
@@ -25,6 +18,7 @@ figures of the paper**. The method itself is implemented in Foldseek.
 
 | | |
 |---|---|
+| Preprint | TODO |
 | Interface search server | https://search.foldseek.com/interface |
 | Interface cluster explorer | https://interface.foldseek.com |
 | Cluster resource download | Zenodo [10.5281/zenodo.22040892](https://doi.org/10.5281/zenodo.22040892) |
@@ -115,10 +109,6 @@ Supporting scripts:
 annotations) into the annotated interface table; `create_cluster_summary.ipynb`
 aggregates it into per-cluster summary statistics.
 
-**Run order:** `residue_mapping.py` first — every other script consumes its output —
-then the remaining retrieval scripts, then `add_annot_to_clusters.ipynb`, then
-`create_cluster_summary.ipynb`.
-
 ### 4. Downstream analysis (`analysis/`)
 
 - **Secondary structure** — `cath_interface_secondary_structure_analysis.ipynb` with
@@ -166,9 +156,6 @@ then the remaining retrieval scripts, then `add_annot_to_clusters.ipynb`, then
 | Figure 3h–l · Table S11 | `analysis/notebook_pathogen_mimicry.ipynb` |
 | Figure 4 · S4 · Tables S12, S13 | `analysis/figure4_S4.ipynb`; panel 4d via `analysis/enrichGO_humanppi_nohit.R`, AF-MM benchmark in `analysis/af_new_if-types.ipynb`, HumanPPI processing in `analysis/humanppi_vs_pdb.ipynb` |
 
-Section headings inside the figure notebooks match the panel labels in the published
-figures. In `figureS1.ipynb` and `figureS2.ipynb` the code blocks are **not** in
-alphabetical panel order.
 
 ## Requirements
 
@@ -180,11 +167,3 @@ alphabetical panel order.
 - **Python 3** — numpy, pandas, scipy, scikit-learn, statsmodels, matplotlib, seaborn,
   biopython (v1.86), gemmi, requests, tqdm
 - **R** — clusterProfiler, ggplot2, org.Hs.eg.db, org.Bt.eg.db
-- **ChimeraX** — interface visualisation
-- `curl`, `jq`, `awk` for the shell pipelines
-
-## Data and paths
-Input datasets and intermediate results are not included in this repository. The
-interface cluster resource is available from
-[Zenodo 10.5281/zenodo.22040892](https://doi.org/10.5281/zenodo.22040892), searchable at
-https://interface.foldseek.com, and included in the supplementary material of the paper.
