@@ -29,8 +29,6 @@ figures of the paper**. The method itself is implemented in Foldseek.
 | Interface cluster explorer | https://interface.foldseek.com |
 | Cluster resource download | Zenodo [10.5281/zenodo.22040892](https://doi.org/10.5281/zenodo.22040892) |
 | Foldseek (method source) | https://github.com/steineggerlab/foldseek |
-| Search server source | https://github.com/soedinglab/MMseqs2-App |
-| Cluster explorer source | https://github.com/rachelse/bfvd-web |
 
 ## Repository layout
 
@@ -95,12 +93,11 @@ Supporting scripts:
 
 - `annotations/collate_cluster_results.py` — joins dimer-level and interface-level
   assignments into one table covering all 3.12 M interfaces.
-- `scripts/lca.sh` — taxonomic last common ancestor per cluster via `mmseqs lca`.
+- `scripts/lca.sh` — taxonomic last common ancestor per cluster via `mmseqs lca` followed by Metabuli-App.
 - `scripts/nmr_clustering.sh` — NMR control. 1,805 NMR entries in the dimer database
   yielded 5,135 dimers, 3,950 of them with multiple models; each entry's models are
   re-clustered with the PDB parameters. 83.79 % of NMR entries yield a single interface
-  cluster (most fragmented: 25 clusters), i.e. interface conformational flexibility
-  rarely changes cluster assignment.
+  cluster (most fragmented: 25 clusters).
 
 ### 3. Annotation (`annotations/`)
 
@@ -163,7 +160,7 @@ then the remaining retrieval scripts, then `add_annot_to_clusters.ipynb`, then
 | Figure 1 | `benchmarking/figure1.ipynb` |
 | Figure S1 · Tables S1–S6 | `benchmarking/figureS1.ipynb` |
 | Figure 2 · Table S7 | `analysis/figure2.ipynb`; panel 2d from `analysis/cath_interface_secondary_structure_analysis.ipynb`, panel 2c from `scripts/nmr_clustering.sh` |
-| Figure S2 · Table S8 | `analysis/figureS2.ipynb` (NMR clustering input from `scripts/nmr_clustering.sh`) |
+| Figure S2 · Table S8 | `analysis/figureS2.ipynb`,  NMR clustering input from `scripts/nmr_clustering.sh` |
 | Table S9 | `analysis/cath_interface_secondary_structure_analysis.ipynb` |
 | Figure 3 · S3 · Table S10 | `analysis/figure3_S3.ipynb` |
 | Figure 3h–l · Table S11 | `analysis/notebook_pathogen_mimicry.ipynb` |
@@ -177,7 +174,7 @@ alphabetical panel order.
 
 - **Foldseek** with interface support — `createdimerdb`, `createinterfacedb`,
   `multimercluster`, `multimersearch`, `easy-multimersearch`, `easy-multimercluster`
-- **MMseqs2** — `scripts/lca.sh`; commit 6f45232 was used for the ColabFold MSAs
+- **MMseqs2** — `scripts/lca.sh`
 - **iAlign** (Perl) — benchmark baseline
 - **ColabFold v1.5.5** — AlphaFold-Multimer predictions
 - **Python 3** — numpy, pandas, scipy, scikit-learn, statsmodels, matplotlib, seaborn,
@@ -186,17 +183,7 @@ alphabetical panel order.
 - **ChimeraX** — interface visualisation
 - `curl`, `jq`, `awk` for the shell pipelines
 
-The SLURM scripts were run with up to 64 CPUs and 1 TB memory per job; PDB-scale
-database construction and exhaustive interface clustering are the memory-limiting steps.
-
 ## Data and paths
-
-Scripts and notebooks reference **absolute paths** on the compute infrastructure used
-for the study (`/fsimb/groups/imb-luckgr/...`, `/Volumes/imb-luckgr/...`, `/fast2/...`)
-and Foldseek binaries at build-specific locations
-(`/home/stromjoe/foldseek/build_*/src/foldseek`). These must be adapted before
-re-running anything.
-
 Input datasets and intermediate results are not included in this repository. The
 interface cluster resource is available from
 [Zenodo 10.5281/zenodo.22040892](https://doi.org/10.5281/zenodo.22040892), searchable at
