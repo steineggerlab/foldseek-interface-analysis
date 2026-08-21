@@ -8,7 +8,7 @@ enabling fast alignment and clustering of protein interaction interfaces. It mat
 the accuracy of iAlign while running up to **230× faster**. Applied to all biological
 assemblies in the PDB, it clusters **3,121,961 dimers into 77,167 interface clusters**
 (via 189,830 non-redundant dimer representatives) — the first comprehensive resource of
-experimentally determined protein interfaces clustered by interface structure. The full
+experimentally determined protein interfaces clustered by interface structure alone. The full
 workflow took roughly six days: 21 h on two L40S GPUs plus 120 h on a single 128-core node.
 
 This repository holds **only the scripts and notebooks that produced the results and
@@ -42,7 +42,7 @@ sequence-derived ground-truth sets were built:
 
 - **Order–order (DDI)** — ProtCID clusters for a manually curated set of 43 Pfam
   binding pairs with high-confidence domain–domain interface structures; 30 pairs had
-  ProtCID clusters, giving **41 clusters / 654 interfaces**. ProtCID data dump of
+  ProtCID clusters, giving **41 clusters / 654 interfaces**. Source data: ProtCID data dump on
   2024-02-01. Built in `benchmarking/create_ord-ord_benchmark_dataset.ipynb`.
 - **Disorder–order (DMI)** — SLiM classes from a MoMaP data dump (2024-06-05)
   restricted to classes mapped to ELM, sampled evenly across the 2nd/3rd/4th quartiles
@@ -51,12 +51,12 @@ sequence-derived ground-truth sets were built:
 
 | Script | Purpose |
 |---|---|
-| `scripts/slurm_foldseek_ord-ord.sh`, `slurm_foldseek_dis-ord.sh` | All-by-all Foldseek-Interface alignment on DDI / DMI |
-| `scripts/slurm_ialign-is_*.sh`, `slurm_ialign-tm_*.sh` | iAlign baselines, IS-score and TM-score normalisation |
+| `scripts/slurm_foldseek_ord-ord.sh`, `slurm_foldseek_dis-ord.sh` | All-by-all Foldseek-Interface alignment on Order-order/Disorder-order |
+| `scripts/slurm_ialign-is_*.sh`, `slurm_ialign-tm_*.sh` | All-by-all iAlign alignment on Order-order/Disorder-order, once with IS-score option and once with TM-score option |
 | `scripts/slurm_foldseek_*_single-chain-thresh.sh` | Sweeps of `--lddt-threshold` and `--tmscore-threshold` (0.1–0.9) |
 | `scripts/slurm_foldseek_*_pdb-aln_filter-modes.sh` | Prefilter modes (default k-mer, ungapped, exhaustive + LDDT) at PDB scale |
-| `scripts/slurm_foldseek_createdb_pdb-plus-bm.sh` | Combined PDB + benchmark interface database for the scaling tests |
-| `scripts/slurm_foldseek_*_cluster_dimer-int.sh` | Clustering benchmark: dimer clustering, then interface clustering of representatives at interface TM 0.3 / 0.4 / 0.5 |
+| `scripts/slurm_foldseek_createdb_pdb-plus-bm.sh` | Creation of combined PDB + benchmark interface database for the scaling tests |
+| `scripts/slurm_foldseek_*_cluster_dimer-int.sh` | Clustering benchmark: dimer clustering, then interface clustering of representatives at interface TM-score 0.3 / 0.4 / 0.5 |
 
 Evaluation code: `benchmarking/results_processing.py` (report parsing, ROC/AUC,
 heatmaps), `benchmarking/pdb_file_processing.py` (structure handling, two-chain
@@ -141,7 +141,7 @@ aggregates it into per-cluster summary statistics.
   sensitivity 7) and scored by DockQ.
 - **Visualisation** — `get_two_chains.py` extracts the two interacting chains of a
   cluster representative; `color_if_res.py` renders a standardised interface view in
-  ChimeraX (`open color_if_res.py`, then `color_if_res model #1 chain1 A chain2 B color_mode dark`).
+  ChimeraX.
 
 ## Figures and supplemental tables
 
