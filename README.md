@@ -18,7 +18,7 @@ figures of the paper**. The method itself is implemented in Foldseek.
 
 | | |
 |---|---|
-| Preprint | TODO |
+| Preprint | https://www.biorxiv.org/content/10.64898/2026.08.24.746585v2 |
 | Interface search server | https://search.foldseek.com/interface |
 | Interface cluster explorer | https://interface.foldseek.com |
 | Cluster resource download | Zenodo [10.5281/zenodo.22040892](https://doi.org/10.5281/zenodo.22040892) |
@@ -31,7 +31,7 @@ figures of the paper**. The method itself is implemented in Foldseek.
 | `scripts/` | Shell/SLURM drivers for all Foldseek, iAlign and MMseqs2 runs — database construction, benchmarks, PDB and HumanPPI clustering, NMR control, taxonomy assignment |
 | `benchmarking/` | Benchmark dataset construction, accuracy evaluation, Figure 1 / S1, Tables S1–S6 |
 | `annotations/` | Retrieval of external annotations for the PDB interfaces and assembly of the annotated cluster tables |
-| `analysis/` | Downstream analyses, Figures 2–4 / S2–S4, Tables S7–S13 |
+| `analysis/` | Downstream analyses, Figures 1–4 / S2–S4, Tables S7–S13 |
 
 ## Pipeline
 
@@ -56,16 +56,12 @@ sequence-derived ground-truth sets were built:
 | `scripts/slurm_foldseek_*_single-chain-thresh.sh` | Sweeps of `--lddt-threshold` and `--tmscore-threshold` (0.1–0.9) |
 | `scripts/slurm_foldseek_*_pdb-aln_filter-modes.sh` | Prefilter modes (default k-mer, ungapped, exhaustive + LDDT) at PDB scale |
 | `scripts/slurm_foldseek_createdb_pdb-plus-bm.sh` | Creation of combined PDB + benchmark interface database for the scaling tests |
-| `scripts/slurm_foldseek_*_cluster_dimer-int.sh` | Clustering benchmark: dimer clustering, then interface clustering of representatives at interface TM-score 0.3 / 0.4 / 0.5 |
 
 Evaluation code: `benchmarking/results_processing.py` (report parsing, ROC/AUC,
 heatmaps), `benchmarking/pdb_file_processing.py` (structure handling, two-chain
 extraction), `benchmarking/process_cluster_benchmark.ipynb` (Adjusted Rand Score
 against the ground-truth clusterings).
 
-Headline result: 0.966 vs. 0.949 (order–order) and 0.789 vs. 0.809 (disorder–order)
-for Foldseek-Interface vs. iAlign. An interface TM-score cut-off of **0.3** is optimal
-on the benchmarks; **0.4** was chosen for the full PDB (Fig. S2a).
 
 ### 2. Clustering the PDB (`scripts/cluster_pdb.sh`)
 
@@ -76,12 +72,12 @@ PDBe biological assembly files downloaded 2025-03-13. Two-stage procedure:
    `--multimer-tm-threshold 0.9 --chain-tm-threshold 0.5 --interface-lddt-threshold 0 -c 0 --cov-mode 0 --cluster-mode 0`
    → 189,830 non-redundant dimer clusters. Strict thresholds avoid merging distinct interfaces.
 2. `foldseek createinterfacedb` on the dimer representatives, then `multimercluster` with
-   `--multimer-tm-threshold 0.4 --chain-tm-threshold 0 --interface-lddt-threshold 0 -c 0 --cov-mode 0 --cluster-mode 0 --exhaustive-search 1 -e 10000000 --lddt-threshold 0.2 --max-iteration 1`
+   `--multimer-tm-threshold 0.4 --chain-tm-threshold 0 --interface-lddt-threshold 0 -c 0 --cov-mode 0 --cluster-mode 0 --exhaustive-search 1 -e 10000000 --lddt-threshold 0.2`
    → **77,167 interface clusters**. All members of each dimer cluster inherit the
    interface cluster of their representative.
 
 The final step was re-run at thresholds 0.3 / 0.4 / 0.5 and scored by Adjusted Rand
-Score against the benchmark ground truth to confirm the choice of 0.4.
+Score against the benchmark ground truth to confirm the choice of 0.4. (Fig. 1f)
 
 Supporting scripts:
 
@@ -147,7 +143,7 @@ aggregates it into per-cluster summary statistics.
 
 | Output | Location |
 |---|---|
-| Figure 1 | `benchmarking/figure1.ipynb` |
+| Figure 1 | `benchmarking/figure1.ipynb`, `benchmarking/figureS1.ipynb`, `analysis/figure1_figureS2.ipynb` |
 | Figure S1 · Tables S1–S6 | `benchmarking/figureS1.ipynb` |
 | Figure 2 · Table S7 | `analysis/figure2.ipynb`; panel 2d from `analysis/cath_interface_secondary_structure_analysis.ipynb`, panel 2c from `scripts/nmr_clustering.sh` |
 | Figure S2 · Table S8 | `analysis/figureS2.ipynb`,  NMR clustering input from `scripts/nmr_clustering.sh` |
