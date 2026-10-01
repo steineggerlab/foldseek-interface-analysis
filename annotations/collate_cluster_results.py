@@ -48,13 +48,13 @@ def main():
     merge.drop_duplicates(subset=["old_complex_id"], keep="first", inplace=True)
     print(merge.shape[0])
     
-    dimerclu = pd.read_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/results/cluster_analysis/clu_mult90_chain50_clustermode0_cluster.tsv', header=None, sep='\t')
+    dimerclu = pd.read_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/results/clustering/clu_mult90_chain50_clustermode0_cluster.tsv', header=None, sep='\t')
     dimerclu.columns = ['representative','member']
     dimerclu['dimercluster'] = pd.factorize(dimerclu.representative)[0]
     dimerclu['complex_id'] = [int(x.split('DI_')[0]) for x in dimerclu.member]
     print(dimerclu.complex_id[0:10])
 
-    intclu = pd.read_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/results/cluster_analysis/interfaceclu40_0_cluster.tsv', header=None, sep='\t')
+    intclu = pd.read_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/results/clustering/interfaceclu40_0_cluster.tsv', header=None, sep='\t')
     intclu.columns = ['representative','member']
     intclu['intcluster'] = pd.factorize(intclu.representative)[0]
     intclu['member_complex_id'] = [int(x.split('DI')[0]) for x in intclu.member]
@@ -70,7 +70,7 @@ def main():
     merge['dimerrep'] = [1 if x in dimerrep_complex_ids else 0 for x in merge['old_complex_id']]
     merge['intrep'] = [1 if x in intrep_complex_ids else 0 for x in merge['old_complex_id']]
 
-    merge.to_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/results/cluster_analysis/pdb_clusters.tsv', sep='\t', index=None)
+    merge.to_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/results/clustering/pdb_clusters.tsv', sep='\t', index=None)
 
 if __name__ == "__main__":
     main()

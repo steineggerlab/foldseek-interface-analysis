@@ -7,7 +7,7 @@ import requests
 def main():
 
     # From collate_cluster_results.py
-    pdb_clusters = pd.read_csv("/fsimb/groups/imb-luckgr/projects/interface_clustering/results/cluster_analysis/pdb_clusters.tsv", sep="\t")
+    pdb_clusters = pd.read_csv("/fsimb/groups/imb-luckgr/projects/interface_clustering/results/clustering/pdb_clusters.tsv", sep="\t")
     pdb_ids_to_fetch = list(set([x[0:4] for x  in pdb_clusters["pdb_id"]]))
     print("# PDB IDs to access: ", len(pdb_ids_to_fetch))
 
@@ -67,7 +67,7 @@ def main():
         reses.append(curr_res)
 
     pdb_keywords = pd.DataFrame({"pdb_id":pdb_ids_to_fetch, "keyword":keywords, "expt_method":expts, "resolution":reses, "title":titles})
-    pdb_keywords.to_csv("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/mapping/pdb_characteristics.tsv", sep="\t", index=None)
+    pdb_keywords.to_csv("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/pdb_characteristics.tsv", sep="\t", index=None)
 
 if __name__ == "__main__":
     main()

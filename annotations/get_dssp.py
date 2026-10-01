@@ -8,7 +8,7 @@ import gzip
 def main():
 
     # From residue_mapping.py
-    res_map = pd.read_csv("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/mapping/uniprot_residue_mapping.tsv", sep="\t")
+    res_map = pd.read_csv("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/uniprot_annotations/uniprot_residue_mapping.tsv", sep="\t")
     res_map["simple_pdb_id"] = [x[0:4] for x in res_map["pdb_id"]]
     res_map["simple_chain_id"] = [str(x).split("-")[0] for x in res_map["chain_id"]]
 
@@ -84,7 +84,7 @@ def main():
                 other_fracs.append(other_frac)
             
     struct_types_df = pd.DataFrame({"new_complex_id":complex_ids, "chain_id":chain_ids, "helix_frac":helix_fracs, "beta_frac":beta_fracs, "turn_frac":turn_fracs, "bend_frac":bend_fracs, "other_frac":other_fracs})
-    struct_types_df.to_csv("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/mapping/if_struct_types.tsv", sep="\t", index=None)
+    struct_types_df.to_csv("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/if_struct_types.tsv", sep="\t", index=None)
 
 if __name__ == "__main__":
     main()

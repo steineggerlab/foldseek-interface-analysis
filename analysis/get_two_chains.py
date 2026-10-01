@@ -16,11 +16,11 @@ def get_two_chains(structure, chains, save_name):
                 return True
             else:
                 return False
-    io.save(f"/fsimb/groups/imb-luckgr/imb-luckgr2/projects/interface_clustering/two-chain_dimerreps/{str(save_name)}.cif", ChainSelect())
+    io.save(f"/fsimb/groups/imb-luckgr/projects/interface_clustering/visualizations/visualize_pdb_cluster/two-chain_dimerreps/{str(save_name)}.cif", ChainSelect())
 
 def main():
     
-    pdb_clusters = pd.read_csv("/fsimb/groups/imb-luckgr/projects/interface_clustering/results/cluster_analysis/pdb_clusters_annotated.tsv", sep="\t")
+    pdb_clusters = pd.read_csv("/fsimb/groups/imb-luckgr/projects/interface_clustering/results/clustering/pdb_clusters_annotated.tsv", sep="\t")
     pdb_clusters["chain_id_0"] = pdb_clusters["chain_id_0"].fillna('NA')
     pdb_clusters["chain_id_1"] = pdb_clusters["chain_id_1"].fillna('NA')
 
@@ -31,7 +31,7 @@ def main():
     pdb_clusters['report_lookup_id'] = pdb_clusters[['old_complex_id', 'pdb_id']].apply(lambda x: "DI"+str(x.iloc[0])+"_"+str(x.iloc[1]), axis=1)
 
     assemblies = list(set(pdb_clusters.pdb_id))
-    assemblies_processed = [x.split("_")[-1].strip(".cif") for x in os.listdir("/fsimb/groups/imb-luckgr/imb-luckgr2/projects/interface_clustering/two-chain_dimerreps")]
+    assemblies_processed = [x.split("_")[-1].strip(".cif") for x in os.listdir("/fsimb/groups/imb-luckgr/projects/interface_clustering/visualizations/visualize_pdb_cluster/two-chain_dimerreps")]
 
     parser = PDB.MMCIFParser(QUIET=True)
     for assembly in assemblies:

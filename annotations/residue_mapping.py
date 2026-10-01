@@ -47,12 +47,12 @@ def main():
     index['pdb_id'] = [str(x.split("_")[1].split("-")[0]) for x in index.full_id]
     index['chain_id'] = [str(x.split("_")[-1].split("-")[0]) for x in index.full_id]
 
-    mapping = pd.read_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/mapping/pdb_chain_uniprot.tsv', sep='\t', skiprows=1)
+    mapping = pd.read_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/uniprot_annotations/pdb_chain_uniprot.tsv', sep='\t', skiprows=1)
     mapping['shift'] = mapping['SP_BEG'] - mapping['RES_BEG']
     mapping['range'] = mapping[['RES_BEG','RES_END']].apply(lambda x: [x['RES_BEG'],x['RES_END']], axis=1)
     
     res_maps = pd.merge(index, mapping[['PDB','CHAIN','SP_PRIMARY','shift','range']], left_on=['pdb_id','chain_id'], right_on=['PDB','CHAIN'], how='left')
-    res_maps[res_maps['SP_PRIMARY'].isna()].drop_duplicates(subset=['pdb_id','chain_id']).to_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/results/cluster_analysis/pdb_chains_not_mapped.csv')
+    res_maps[res_maps['SP_PRIMARY'].isna()].drop_duplicates(subset=['pdb_id','chain_id']).to_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/uniprot_annotations/pdb_chains_not_mapped.csv')
 
     res_maps['uniprot_res'] = res_maps.apply(lambda x: get_uniprot_res(x), axis=1)
 
@@ -87,7 +87,7 @@ def main():
 
     merge["FLlen"] = merge["chain_index"].map(dict(zip(dimer_index.chain_index, dimer_index.len)))
 
-    merge.to_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/mapping/uniprot_residue_mapping.tsv', sep='\t', index=None)
+    merge.to_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/uniprot_annotations/uniprot_residue_mapping.tsv', sep='\t', index=None)
 
 if __name__ == "__main__":
     main()

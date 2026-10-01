@@ -7,11 +7,11 @@ import requests
 def main():
 
     # From residue_mapping.py
-    uniprot_mapping = pd.read_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/mapping/uniprot_residue_mapping.tsv', sep="\t")
+    uniprot_mapping = pd.read_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/uniprot_annotations/uniprot_residue_mapping.tsv', sep="\t")
     uniprot_acs = list(set(uniprot_mapping["uniprot_id"]))
     print("# Uniprot ACs to access: ", len(uniprot_acs))
 
-    with open("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/mapping/uniprot_coiledcoils.tsv", 'a') as f:
+    with open("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/uniprot_annotations/uniprot_coiledcoils.tsv", 'a') as f:
         f.write("uniprot_id\tft_coiled\n")
 
     batches = range(0, len(uniprot_acs), 20)
@@ -29,7 +29,7 @@ def main():
         coils_without_header = "\n".join(coils.split("\n")[1:])
         print("Number of results: ", len(coils_without_header.split("\n")))
         
-        with open("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/mapping/uniprot_coiledcoils.tsv", 'a') as f:
+        with open("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/uniprot_annotations/uniprot_coiledcoils.tsv", 'a') as f:
             f.write(coils_without_header)
 
 if __name__ == "__main__":

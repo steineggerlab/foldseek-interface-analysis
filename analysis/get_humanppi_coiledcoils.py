@@ -6,12 +6,12 @@ import requests
 
 def main():
     
-    humanppi_ifres = pd.read_csv("/fsimb/groups/imb-luckgr/projects/interface_clustering/results/bfmdvspdb/humanppi_only/humanppi_ifres.tsv", sep="\t")
+    humanppi_ifres = pd.read_csv("/fsimb/groups/imb-luckgr/projects/interface_clustering/results/analysis/humanppi_search/humanppi_ifres.tsv", sep="\t")
     uniprot_acs = list(set(humanppi_ifres["uniprot"]))
     uniprot_acs = [str(x) for x in uniprot_acs if str(x) != "id not found"]
     print("# Uniprot ACs to access: ", len(uniprot_acs))
 
-    with open("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/bfmdvspdb/humanppi_uniprot_coiledcoils.tsv", 'a') as f:
+    with open("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/humanppi_annotations/humanppi_uniprot_coiledcoils.tsv", 'a') as f:
         f.write("uniprot_id\tft_coiled\n")
 
     batches = range(0, len(uniprot_acs), 20)
@@ -29,7 +29,7 @@ def main():
         coils_without_header = "\n".join(coils.split("\n")[1:])
         print("Number of results: ", len(coils_without_header.split("\n")))
         
-        with open("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/bfmdvspdb/humanppi_uniprot_coiledcoils.tsv", 'a') as f:
+        with open("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/humanppi_annotations/humanppi_uniprot_coiledcoils.tsv", 'a') as f:
             f.write(coils_without_header)
 
 if __name__ == "__main__":

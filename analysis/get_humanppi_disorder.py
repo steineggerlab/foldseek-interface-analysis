@@ -28,16 +28,16 @@ def get_disorder_frac(r, iupred):
 def main():
 
     # From humanppi_vs_pdb.ipynb
-    humanppi_ifres = pd.read_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/results/bfmdvspdb/humanppi_only/humanppi_ifres.tsv', sep="\t")
+    humanppi_ifres = pd.read_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/results/analysis/humanppi_search/humanppi_ifres.tsv', sep="\t")
     humanppi_ifres["chain_id"] = [x.split("_")[-1] for x in humanppi_ifres.chain_name]
     uniprot_acs = list(set(humanppi_ifres["uniprot"]))
 
-    if not os.path.isfile('/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/bfmdvspdb/humanppi_disorder_fractions.tsv'):
-        with open("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/bfmdvspdb/humanppi_disorder_fractions.tsv", 'a+') as f:
+    if not os.path.isfile('/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/humanppi_annotations/humanppi_disorder_fractions.tsv'):
+        with open("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/humanppi_annotations/humanppi_disorder_fractions.tsv", 'a+') as f:
             f.write("chain_id\tcomplex_id\tuniprot_id\tdisfrac\n")
         acs_already_processed = []
     else:
-        disorder_fractions = pd.read_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/bfmdvspdb/humanppi_disorder_fractions.tsv', sep="\t")
+        disorder_fractions = pd.read_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/humanppi_annotations/humanppi_disorder_fractions.tsv', sep="\t")
         acs_already_processed = list(set([str(x) for x in disorder_fractions["uniprot_id"]]))
 
     for ac in uniprot_acs:
@@ -55,7 +55,7 @@ def main():
                     iupred.index = iupred.index + 1
                     curr_df["disfrac"] = curr_df.apply(lambda x: get_disorder_frac(x, iupred), axis=1)
                     
-                with open("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/bfmdvspdb/humanppi_disorder_fractions.tsv", 'a') as f:
+                with open("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/humanppi_annotations/humanppi_disorder_fractions.tsv", 'a') as f:
                     for i,r in curr_df.iterrows():
                         line_to_write = "\t".join([str(r["chain_id"]),str(r["complex_id"]),str(r["uniprot"]),str(r["disfrac"])])
                         f.write(line_to_write)

@@ -6,7 +6,7 @@ library(org.Hs.eg.db)
 library(org.Bt.eg.db)
 
 # From humanppi_vs_pdb.ipynb
-gene <- scan("/Users/stromjoe/Documents/humanppi_nohit_uniprots.txt", character(), sep=",")
+gene <- scan("/Volumes/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/go_enrichment/humanppi_nohit_uniprots.txt", character(), sep=",")
 edo <- enrichGO(gene=gene, OrgDb='org.Hs.eg.db', keyType="UNIPROT", ont="ALL", pool=TRUE)
 q <- mutate(edo, qscore = -log(p.adjust, base=10)) |> barplot(x="qscore")
 q <- q + theme(axis.text.x = element_text(size=12, family = "sans"),
@@ -17,15 +17,15 @@ q <- q + theme(axis.text.x = element_text(size=12, family = "sans"),
                  aspect.ratio = 2/1,
                  plot.margin = unit(c(0,0,0,2.5),"cm"))
 q
-png(file="/Volumes/imb-luckgr/projects/interface_clustering/visualizations/plots/humanppi_novelclust_goenrich.png", width=600, height=600)
+png(file="/Volumes/imb-luckgr/projects/interface_clustering/visualizations/plots/humanppi_search/humanppi_novelclust_goenrich.png", width=600, height=600)
 q
 dev.off()
-pdf(file="/Volumes/imb-luckgr/projects/interface_clustering/visualizations/plots/humanppi_novelclust_goenrich.pdf")
+pdf(file="/Volumes/imb-luckgr/projects/interface_clustering/visualizations/plots/humanppi_search/humanppi_novelclust_goenrich.pdf")
 q
 dev.off()
 
 # From figure3.ipynb
-gene <- scan("/Users/stromjoe/Documents/helical_cluster_uniprots_Bt.txt", character(), sep=",")
+gene <- scan("/Volumes/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/go_enrichment/helical_cluster_uniprots_Bt.txt", character(), sep=",")
 edo <- enrichGO(gene=gene, OrgDb='org.Bt.eg.db', keyType="UNIPROT", ont="ALL", pool=TRUE)
 q <- mutate(edo, qscore = -log(p.adjust, base=10)) |> barplot(x="qscore")
 q <- q + theme(axis.text.x = element_text(size=12, family = "sans"),
@@ -36,15 +36,15 @@ q <- q + theme(axis.text.x = element_text(size=12, family = "sans"),
                aspect.ratio = 2/1,
                plot.margin = unit(c(0,0,0,2.5),"cm"))
 q
-png(file="/Volumes/imb-luckgr/projects/interface_clustering/visualizations/plots/cath-diverse_helical_goenrich.png", width=600, height=600)
+png(file="/Volumes/imb-luckgr/projects/interface_clustering/visualizations/plots/cluster_analysis/structural_functional_diversity/cath-diverse_helical_goenrich.png", width=600, height=600)
 q
 dev.off()
-pdf(file="/Volumes/imb-luckgr/projects/interface_clustering/visualizations/plots/cath-diverse_helical_goenrich.pdf")
+pdf(file="/Volumes/imb-luckgr/projects/interface_clustering/visualizations/plots/cluster_analysis/structural_functional_diversity/cath-diverse_helical_goenrich.pdf")
 q
 dev.off()
 
 # From figure3.ipynb
-gene <- scan("/Users/stromjoe/Documents/strand_cluster_uniprots_Hs.txt", character(), sep=",")
+gene <- scan("/Volumes/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/go_enrichment/strand_cluster_uniprots_Hs.txt", character(), sep=",")
 edo <- enrichGO(gene=gene, OrgDb='org.Hs.eg.db', keyType="UNIPROT", ont="ALL", pool=TRUE)
 q <- mutate(edo, qscore = -log(p.adjust, base=10)) |> barplot(x="qscore")
 q <- q + theme(axis.text.x = element_text(size=12, family = "sans"),
@@ -55,9 +55,9 @@ q <- q + theme(axis.text.x = element_text(size=12, family = "sans"),
                aspect.ratio = 2/1,
                plot.margin = unit(c(0,0,0,2.5),"cm"))
 q
-png(file="/Volumes/imb-luckgr/projects/interface_clustering/visualizations/plots/cath-diverse_strand_goenrich.png", width=600, height=600)
+png(file="/Volumes/imb-luckgr/projects/interface_clustering/visualizations/plots/cluster_analysis/structural_functional_diversity/cath-diverse_strand_goenrich.png", width=600, height=600)
 q
 dev.off()
-pdf(file="/Volumes/imb-luckgr/projects/interface_clustering/visualizations/plots/cath-diverse_strand_goenrich.pdf")
+pdf(file="/Volumes/imb-luckgr/projects/interface_clustering/visualizations/plots/cluster_analysis/structural_functional_diversity/cath-diverse_strand_goenrich.pdf")
 q
 dev.off()

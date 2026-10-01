@@ -7,7 +7,7 @@ import requests
 def main():
 
     # From residue_mapping.py
-    uniprot_mapping = pd.read_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/mapping/uniprot_residue_mapping.tsv', sep="\t")
+    uniprot_mapping = pd.read_csv('/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/uniprot_annotations/uniprot_residue_mapping.tsv', sep="\t")
     pdb_ids_to_fetch = list(set([x[0:4] for x  in uniprot_mapping["pdb_id"]]))
     print("# PDB IDs to access: ", len(pdb_ids_to_fetch))
 
@@ -35,7 +35,7 @@ def main():
             print(pdb_id, ": key not found in API response")
 
     pdb_pfam = pd.DataFrame({"pdb_id":pdb_ids, "chain_id":chain_ids, "start":starts, "end":ends, "pfam_name":pfam_names, "pfam_id":pfam_ids})
-    pdb_pfam.to_csv("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/cluster_analysis/mapping/pdb_pfam.tsv", sep="\t", index=None)
+    pdb_pfam.to_csv("/fsimb/groups/imb-luckgr/projects/interface_clustering/datasets/interface_annotations/domains/pdb_pfam.tsv", sep="\t", index=None)
 
 if __name__ == "__main__":
     main()
